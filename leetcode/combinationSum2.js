@@ -4,15 +4,16 @@ function combine(arr, target, start, acc){
         result.push(acc)
         return result
     }
-    console.log(acc)
+    
     
     for(let i = start; i < arr.length; i++){
-        if(arr[i] <= target){
-            acc = acc.concat(arr[i])
-            let front = arr.splice(0, i)
-            let rest = arr.splice(1)
+        if(target - arr[i] >= 0){
+            let num = arr[i]
+            let front = arr.slice(0, i)
+            let rest = arr.slice(i + 1)
+            let newArr = front.concat(rest)
             
-            result = result.concat(combine(front.concat(rest), target - arr[i], i, acc))
+            result = result.concat(combine(newArr, target - num, i, acc.concat(num)))
         }
     }
 
@@ -20,7 +21,17 @@ function combine(arr, target, start, acc){
 }
 
 function combinationSumTwo(arr, target){
-    return combine(arr, target, 0, [])
+    let allSums = combine(arr, target, 0, [])
+    let keys = {}
+
+    for(s in allSums){
+        let key = allSums[s].sort().join('')
+        if(!keys[key]){
+            keys[key] = allSums[s]
+        }
+    }
+
+    return Object.values(keys)
 }
 
 console.log(combinationSumTwo([10,1,2,7,6,1,5], 8))
