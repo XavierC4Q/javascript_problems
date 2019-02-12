@@ -52,7 +52,7 @@ function dfs(root){
     if(root.left){
         dfs(root.left.root)
     }
-    console.log(root.value)
+    
     if(root.right){
         dfs(root.right.root)
     }
@@ -68,7 +68,7 @@ function dfsFindAllValues(root){
     if(root.left){
         nodes = nodes.concat(dfsFindAllValues(root.left.root))
     }
-    console.log(root.value)
+    
     nodes.push(root.value)
 
     if(root.right){
@@ -123,7 +123,6 @@ function bfs(root){
     return values
 }
 
-console.log(bfs(x.root))
 
 function bfsWithCallback(root, cb){
     let visited = []
@@ -143,3 +142,46 @@ function bfsWithCallback(root, cb){
 
     return values
 }
+
+
+let testy = new BinaryTree(3)
+testy.root.left = new Node(9)
+testy.root.right = new Node(20)
+testy.root.left.left = new Node(null)
+testy.root.left.right = new Node(null)
+testy.root.right.left = new Node(15)
+testy.root.right.right = new Node(7)
+
+
+var maxDepth = function(root) {
+    if (!root){
+        return 0
+    }
+    
+    if (!root.left && !root.right) {
+        return 1
+    }
+    
+    let current = root
+    let nodes = []
+    let depths = []
+
+    current.level = 1
+
+    while(current){
+        if(current.left){
+            current.left.level = current.level + 1
+            nodes.push(current.left)
+        }
+        if(current.right){
+            current.right.level = current.level + 1
+            nodes.push(current.right)
+        }
+        depths.push(current.level)
+        current = nodes.shift()
+    }
+
+    return Math.max(...depths)
+};
+
+console.log(maxDepth(testy.root))
