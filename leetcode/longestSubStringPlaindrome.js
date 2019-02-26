@@ -13,7 +13,6 @@ var isPalindrome = function (s) {
 var makeSubString = function (s, longest, begin, end) {
 
     if (begin === end) {
-
         return longest
     }
 
